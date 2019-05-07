@@ -1,9 +1,14 @@
-resource "aws_instance" "Worpress" {
-  ami             = "ami-0dbc0b97451f3807f"
-  instance_type   = "t2.micro"
-  security_groups = ["SG_Wordpress"]
+resource "aws_instance" "WebServer" {
+  ami             = "${lookup(var.amis, var.aws_region)}"
+  instance_type   = "${var.instance_type}"
+  security_groups = ["sg_DefaultWebserver"]
+  key_name        = "${var.key_name}"
+  user_data       = "${file("nginx.sh")}"
 
     tags {
-    Name          = "WordPress usando AMI BITNAMI = ami-0dbc0b97451f3807f"
+    Name            = "WebServer"
+    Provider        = "Terraform+AWS"
+    Role            = "Production"
   }
+
 }

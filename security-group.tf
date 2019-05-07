@@ -1,6 +1,6 @@
-resource "aws_security_group" "SG_Wordpress" {
-  name        = "SG_Wordpress"
-  description = "Libera porta 22/80"
+resource "aws_security_group" "sg_DefaultWebserver" {
+  name        = "sg_DefaultWebserver"
+  description = "Liberar porta 22 e 80"
 
   ingress {
     from_port   = 22
@@ -16,10 +16,17 @@ resource "aws_security_group" "SG_Wordpress" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+
    egress {
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
     cidr_blocks     = ["0.0.0.0/0"]
+  }
+
+  tags {
+    Name        = "sg_DefaultWebserver"
+    Provisioner = "terraform"
+
   }
 }
